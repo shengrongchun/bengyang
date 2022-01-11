@@ -12,31 +12,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.ID = getApp().globalData.ID
+    console.log('ID', this.ID)
   },
 
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.approveTip()
-  },
-  approveTip: function() {
-    wx.showModal({
-      title: "提示",
-      content: "请允许我们像您推送审批通知消息",
-      success() {
-        wx.requestSubscribeMessage({
-          tmplIds: ['7s0AjANAHq6TjpeMMaVd01i57Vg_X36kNGgvOI2fpYU'],
-          success (res) {
-            console.log('tmplIds', res)
-          },
-          fail(error) {
-            console.log('ddd', error)
-          }
-        })
-      },
-    })
+    
   },
   /**
    * 生命周期函数--监听页面显示

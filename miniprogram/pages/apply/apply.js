@@ -45,6 +45,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.ID = getApp().globalData.ID
+    console.log('ID', this.ID)
     this.setData({
       selectFile: this.selectFile.bind(this)
     })

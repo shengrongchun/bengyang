@@ -14,27 +14,31 @@ Page({
       color: "cyan",
       icon: "apply",
       openType:"navigate",
-      url: "/pages/apply/apply"
+      url: "/pages/apply/apply",
+      tmplId: '2ojePAJOu0rK5v_qgi4A9-ssyoWyYwwUg_RzJy1cBZY'
     }, {
         title: "申请进度",
         color: "blue",
         name: "Application",
         icon: "application",
-         openType:"navigate",
-        url: "/pages/application/application"
+        openType:"navigate",
+        url: "/pages/application/application",
+        tmplId: '2ojePAJOu0rK5v_qgi4A9-ssyoWyYwwUg_RzJy1cBZY'
     } , {
         title: "我的审批",
         color: "green",
         name: "Approve",
         icon: "approve",
-        url: "/pages/approve/approve"
+        url: "/pages/approve/approve",
+        tmplId: '7s0AjANAHq6TjpeMMaVd01i57Vg_X36kNGgvOI2fpYU'
     }, {
       title: "关于我们",
       color: "purple",
       name: "About",
       icon: "about",
       openType:"navigate",
-      url: "/pages/about/about"
+      url: "/pages/about/about",
+      tmplId: '7s0AjANAHq6TjpeMMaVd01i57Vg_X36kNGgvOI2fpYU'
     }]
   },
 
@@ -44,39 +48,29 @@ Page({
   onLoad: function (options) {
 
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    console.log('ccc', app.globalData)
-    // wx.getUserInfo({
-    //   success: function(res) {
-    //     console.log('res', res)
-    //   }
-    // })
   },
   viewClick: function(event) {// view点击
-    const {name,url} = event.currentTarget.dataset.item
-    if(name!=='Approve') {//非审批
-      wx.navigateTo({url})
-      return
-    }
-    //我的审批点击
-    if(globalData.phone) {//已经登陆过
-      wx.requestSubscribeMessage({
-        tmplIds: ['7s0AjANAHq6TjpeMMaVd01i57Vg_X36kNGgvOI2fpYU'],
-        success (res) {
+    const {url,tmplId} = event.currentTarget.dataset.item
+    wx.requestSubscribeMessage({
+      tmplIds: [tmplId],
+      success (res) {
+      },
+      fail(error) {
+      },
+      complete() {
+        if(globalData.ID) {//已经登陆过
           wx.navigateTo({url})
-          console.log('success', res)
-        },
-        fail(error) {
-          console.log('fail', error)
+        }else {//请先登陆
+          app.login(()=> {//登陆回调成功
+            wx.navigateTo({url})
+          })
         }
-      })
-    }else {//请先登陆
-      app.login()
-    }
+      }
+    })
   },
   /**
    * 生命周期函数--监听页面显示

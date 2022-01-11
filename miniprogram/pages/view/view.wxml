@@ -1,0 +1,14 @@
+<!-- pages/view/view.wxml -->
+<view class="container">
+  <!-- <view class="userinfo">
+    <open-data class="userinfo-avatar" type="userAvatarUrl"></open-data>
+    <open-data class="userinfo-nickname" type="userNickName"></open-data>
+  </view> -->
+  <view class="nav-list">
+    <view style="background-image: url({{avatarUrl}})" class="nav-li bg-{{item.color}}" hoverClass="none" bindtap="viewClick" data-item="{{item}}" wx:for="{{list}}" wx:key="index">
+      <view class="nav-title">{{item.title}}</view>
+      <view class="nav-name">{{item.name}}</view>
+      <text class="cuIcon-{{item.icon}}"></text>
+    </view>
+  </view>
+</view>

@@ -16,12 +16,12 @@ App({
       })
       //全局登陆方法
       this.login = function(cb=()=>{}) {
+        wx.showLoading()
         wx.cloud.callFunction({
           name: 'getApprove',
         }).then((data)=> {
           const { openid } = data.result || {}
           if(openid) {
-            console.log('登陆成功', openid)
             this.globalData.ID = openid
             cb()
           }
@@ -37,6 +37,15 @@ App({
       }
       //
       this.login()
+      //获取当前日期
+      this.getCurrentDate = function() {
+        const date = new Date()
+        const years = date.getFullYear()
+        let months = date.getMonth()+1
+        months = months>9?months:'0'+months
+        const days = date.getDate()
+        return [years,months,days].join('-')
+      }
     }
   }
 })

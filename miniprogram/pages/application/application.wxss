@@ -1,1 +1,93 @@
 /* pages/application/application.wxss */
+.page__bd {
+  background: #eee;
+  min-height: 100%;
+}
+.weui-form-preview {
+  margin-bottom: 20rpx;
+}
+.nodata {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #aaa;
+  padding-top: 100rpx;
+}
+.blue {
+  color: #2196F3;
+}
+.success {
+  color: green;
+}
+.red {
+  color: red;
+}
+.go-dialog > .weui-dialog > .weui-dialog__hd {
+ display: none;
+}
+.go-dialog > .weui-dialog {
+  background: #eee;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  left: 5px;
+  width: calc(100% - 10px);
+}
+.go-dialog > .weui-dialog > .weui-dialog__bd {
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.go-header {
+  background: #2196F3;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 30rpx 30rpx 30rpx 50rpx;
+  color: #fff;
+  font-size: 35rpx;
+}
+.go-header > .left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.go-header > .left >.go {
+  margin-bottom: 20rpx;
+  font-weight: bolder;
+  color: #a5dbf3;
+}
+.go-header > .left .name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.go-main {
+  height: calc(100% - 86px);
+  margin: 20rpx;
+  padding: 20rpx;
+  background: #fff;
+  border-radius: 8rpx;
+  display: flex;
+  flex-direction: column;
+  color: #000;
+  font-size: 60rpx;
+  justify-content: center;
+  font-weight: 500;
+  box-sizing: border-box;
+}
+.go-pics {
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.go-logo {
+  width: 25px;
+  height: 24px;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  margin-top: -5rpx;
+}

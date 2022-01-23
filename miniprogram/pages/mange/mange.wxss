@@ -1,0 +1,80 @@
+/* pages/mange.wxss */
+page {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.tab-scroll {
+  background: #ffffff;
+  height: 90rpx;
+  white-space: nowrap;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 999;
+  overflow: hidden;
+  padding: 0 30rpx;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.tab-view {
+  text-align: center;
+  color: #000000;
+  font-size: 34rpx;
+  font-weight: 300;
+  height: 86rpx;
+  display: inline-block;
+  line-height: 86rpx;
+  margin-right: 50rpx;
+}
+
+.tab-text {
+  display: block;
+  color: #000000;
+}
+
+.active {
+  color: #0081ff!important;
+  font-weight: 400;
+  font-size: 36rpx;
+  height: 86rpx;
+  line-height: 86rpx;
+  border-bottom: 4rpx solid #0081ff;
+}
+.main-list {
+  flex: 1;
+  padding: 100rpx 0 20rpx 0;
+  background: #eee;
+}
+
+.weui-form-preview {
+  margin-bottom: 20rpx;
+}
+
+.custom-dialog > .weui-dialog {
+  transform: scale3d(1,1,1) translateY(-65%);
+}
+
+.nodata {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #aaa;
+  padding-top: 100rpx;
+}
+.addPerson {
+  position: fixed;
+  color: #aaa;
+  right: 60rpx;
+  bottom: 20%;
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  background: #fff;
+  border: 1px solid #eee;
+  text-align: center;
+  line-height: 73rpx;
+  font-size: 50rpx;
+  box-shadow: 0 0 6px rgb(0 0 0 / 12%);
+}

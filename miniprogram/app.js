@@ -1,7 +1,10 @@
 //app.js
 App({
   onLaunch: function () {
-    this.globalData = {}
+    this.globalData = {
+      applyIds: '2ojePAJOu0rK5v_qgi4A9-ssyoWyYwwUg_RzJy1cBZY',
+      approveIds: '7s0AjANAHq6TjpeMMaVd01i57Vg_X36kNGgvOI2fpYU'
+    }
     //
     if (!wx.cloud) {
       console.error('请使用 2.2.3 或以上的基础库以使用云能力')
@@ -20,31 +23,54 @@ App({
         wx.cloud.callFunction({
           name: 'getApprove',
         }).then((data)=> {
-          const { openid } = data.result || {}
+          const { openid, ID } = data.result || {}
           if(openid) {
             this.globalData.ID = openid
+            this.globalData.User = ID === openid
             cb()
           }
-          wx.hideLoading()
         }).catch((err)=> {
            wx.showToast({
             title: '登陆失败',
             icon: 'none',
             duration: 2000
           })
+        }).finally(()=> {
           wx.hideLoading()
         })
       }
-      //
-      this.login()
       //获取当前日期
-      this.getCurrentDate = function() {
+      this.getCurrentDate = function(num=0,timer) {
         const date = new Date()
+        date.setDate(date.getDate()+num)
         const years = date.getFullYear()
         let months = date.getMonth()+1
         months = months>9?months:'0'+months
         const days = date.getDate()
-        return [years,months,days].join('-')
+        let val = [years,months,days].join('-')
+        if(timer) {//需要时分秒
+          let h = date.getHours()
+          h = h>9?h:'0'+h
+          let m = date.getMinutes()
+          m = m>9?m:'0'+m
+          let s = date.getSeconds()
+          s = s>9?s:'0'+s
+          val+= ' '+h+':'+m+':'+s
+        }
+        return val
+      }
+      //订阅消息方法
+      this.confirmSendMsg = function(tmplId, cb=()=> {}) {
+        wx.requestSubscribeMessage({
+          tmplIds: [tmplId],
+          success (res) {
+          },
+          fail(error) {
+          },
+          complete() {
+            cb()
+          }
+        })
       }
     }
   }

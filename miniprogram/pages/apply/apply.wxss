@@ -14,3 +14,14 @@
   padding: 10rpx 0;
   z-index: 100;
 }
+.approve_btn {
+  text-align: center;
+}
+.mini-btn{
+  margin: 40rpx;
+}
+.examMain {
+  height: 100%;
+  text-align: center;
+  margin-top: 20rpx;
+}

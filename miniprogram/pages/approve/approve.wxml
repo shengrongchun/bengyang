@@ -1,2 +1,47 @@
-<!--pages/approve/approve.wxml-->
-<text>pages/approve/approve.wxml</text>
+<!-- pages/approve/approve.wxml -->
+<wxs module="filter">
+module.exports = {
+  list :  ['手术跟台', '手术交流', '设备维护维修', '参观学习','其他']
+}
+</wxs>
+<view class="page">
+  <view wx:if="{{list.length}}" class="page__bd">
+    <!-- 开始 -->
+    <view class="weui-form-preview" wx:for="{{list}}" data-item="{{item}}" wx:key="id">
+      <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">当前审批</view>
+          <view class="weui-form-preview__value_in-hd blue">{{item.status[0]}}</view>
+        </view>
+      </view>
+      <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">姓名</view>
+          <view class="weui-form-preview__value">{{item.name}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">提交时间</view>
+          <view class="weui-form-preview__value">{{item.commitDate}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">进入时间</view>
+          <view class="weui-form-preview__value">{{item.date}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">进入类型</view>
+          <view class="weui-form-preview__value">{{filter.list[item.type]}}</view>
+        </view>
+      </view>
+      <view class="weui-form-preview__ft">
+        <view bindtap="createApply" data-item="{{item}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">
+          审批
+        </view>
+      </view>
+    </view>
+    <!-- 结束 -->
+    <view class="weui-loadmore" wx:if="{{locked}}">
+      <view>已全部加载</view>
+    </view>
+  </view>
+  <view wx:else class="nodata">暂无审批信息</view>
+</view>

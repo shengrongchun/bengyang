@@ -7,24 +7,24 @@
         <mp-cell title="人员类型" ext-class="">
           <radio-group bindchange="formInputChange" data-field="personType">
             <label class="marginRight20">
-              <radio value="1" checked="{{formData.personType==='1'}}" />
+              <radio disabled="{{approve}}" value="1" checked="{{formData.personType==='1'}}" />
               非本院职工
             </label>
             <label>
-              <radio value="2" checked="{{formData.personType==='2'}}" />
+              <radio disabled="{{approve}}" value="2" checked="{{formData.personType==='2'}}" />
               本院职工
             </label>
           </radio-group>
         </mp-cell>
         <!-- 公共部分 -->
         <mp-cell prop="name" title="姓名" ext-class="">
-          <input value="{{formData.name}}" bindinput="formInputChange" data-field="name" class="weui-input" placeholder="请输入姓名" />
+          <input disabled="{{approve}}" value="{{formData.name}}" bindinput="formInputChange" data-field="name" class="weui-input" placeholder="请输入姓名" />
         </mp-cell>
         <mp-cell prop="mobile" title="手机号" ext-class="">
-          <input value="{{formData.mobile}}" bindinput="formInputChange" type="number" maxlength="11" data-field="mobile" class="weui-input" placeholder="请输入手机号" />
+          <input disabled="{{approve}}" value="{{formData.mobile}}" bindinput="formInputChange" type="number" maxlength="11" data-field="mobile" class="weui-input" placeholder="请输入手机号" />
         </mp-cell>
         <mp-cell prop="date" title="进入日期" ext-class="">
-          <picker data-field="date" mode="date" value="{{formData.date}}" start="{{startDate}}" bindchange="formInputChange" data-field="date">
+          <picker disabled="{{approve}}" data-field="date" mode="date" value="{{formData.date}}" start="{{startDate}}" end="{{endDate}}" bindchange="formInputChange" data-field="date">
             <view wx:if="{{formData.date}}" class="weui-input">{{formData.date}}</view>
             <input wx:else disabled placeholder="请选择进入日期"></input>
           </picker>
@@ -32,58 +32,129 @@
         <!-- 本院职工 -->
         <view wx:if="{{formData.personType==='2'}}">
           <mp-cell prop="no" title="工号" ext-class="">
-            <input value="{{formData.no}}" bindinput="formInputChange" type="number" data-field="no" class="weui-input" placeholder="请输入工号" />
+            <input disabled="{{approve}}" value="{{formData.no}}" bindinput="formInputChange" type="number" data-field="no" class="weui-input" placeholder="请输入工号" />
+          </mp-cell>
+          <!-- 照片相关 -->
+          <mp-cell prop="noPics" title="工作证照片" ext-class="">
+            <mp-uploader bindfail="failPics" binddelete="delPics" showDelete="{{!approve}}" bindselect="formInputChange" data-field="noPics" files="{{formData.noPics}}" max-count="1" tips="上传有名字正面" title=""></mp-uploader>
           </mp-cell>
         </view>
         <!-- 非职工 -->
         <view wx:if="{{formData.personType==='1'}}">
+          <mp-cell prop="compy" title="单位" ext-class="">
+            <input disabled="{{approve}}" value="{{formData.compy}}" bindinput="formInputChange" data-field="compy" class="weui-input" placeholder="请输入单位" />
+          </mp-cell>
+          <mp-cell prop="job" title="职业" ext-class="">
+            <input disabled="{{approve}}" value="{{formData.job}}" bindinput="formInputChange" data-field="job" class="weui-input" placeholder="请输入职业" />
+          </mp-cell>
           <mp-cell title="性别" ext-class="">
             <radio-group bindchange="formInputChange" data-field="sex">
               <label class="marginRight20">
-                <radio value="1" checked="{{formData.sex==='1'}}" />
+                <radio disabled="{{approve}}" value="1" checked="{{formData.sex==='1'}}" />
                 男
               </label>
               <label>
-                <radio value="2" checked="{{formData.sex==='2'}}" />
+                <radio disabled="{{approve}}" value="2" checked="{{formData.sex==='2'}}" />
                 女
               </label>
             </radio-group>
           </mp-cell>
+          <mp-cell title="传染性疾病" ext-class="">
+            <radio-group bindchange="formInputChange" data-field="ill1">
+              <label class="marginRight20">
+                <radio disabled="{{approve}}" value="1" checked="{{formData.ill1==='1'}}" />
+                有
+              </label>
+              <label>
+                <radio disabled="{{approve}}" value="2" checked="{{formData.ill1==='2'}}" />
+                无
+              </label>
+            </radio-group>
+          </mp-cell>
+          <mp-cell title="呼吸道疾病" ext-class="">
+            <radio-group bindchange="formInputChange" data-field="ill2">
+              <label class="marginRight20">
+                <radio disabled="{{approve}}" value="1" checked="{{formData.ill2==='1'}}" />
+                有
+              </label>
+              <label>
+                <radio disabled="{{approve}}" value="2" checked="{{formData.ill2==='2'}}" />
+                无
+              </label>
+            </radio-group>
+          </mp-cell>
+          <mp-cell title="身体创伤" ext-class="">
+            <radio-group bindchange="formInputChange" data-field="ill3">
+              <label class="marginRight20">
+                <radio disabled="{{approve}}" value="1" checked="{{formData.ill3==='1'}}" />
+                有
+              </label>
+              <label>
+                <radio disabled="{{approve}}" value="2" checked="{{formData.ill3==='2'}}" />
+                无
+              </label>
+            </radio-group>
+          </mp-cell>
+          <mp-cell title="医学背景" ext-class="">
+            <radio-group bindchange="formInputChange" data-field="ill4">
+              <label class="marginRight20">
+                <radio disabled="{{approve}}" value="1" checked="{{formData.ill4==='1'}}" />
+                有
+              </label>
+              <label>
+                <radio disabled="{{approve}}" value="2" checked="{{formData.ill4==='2'}}" />
+                无
+              </label>
+            </radio-group>
+          </mp-cell>
           <mp-cell prop="card" title="身份证号" ext-class="">
-            <input value="{{formData.card}}" bindinput="formInputChange" type="idcard" maxlength="18" data-field="card" class="weui-input" placeholder="请输入身份证号" />
+            <input disabled="{{approve}}" value="{{formData.card}}" bindinput="formInputChange" type="idcard" maxlength="18" data-field="card" class="weui-input" placeholder="请输入身份证号" />
+          </mp-cell>
+          <!-- 照片相关 -->
+          <mp-cell prop="cardPics" title="身份证照片" ext-class="">
+            <mp-uploader bindfail="failPics" binddelete="delPics" showDelete="{{!approve}}" bindselect="formInputChange" data-field="cardPics" files="{{formData.cardPics}}" max-count="1" tips="上传有名字正面" title=""></mp-uploader>
+          </mp-cell>
+          <mp-cell prop="jkPics" title="健康码截图" ext-class="">
+            <mp-uploader bindfail="failPics" binddelete="delPics" showDelete="{{!approve}}" bindselect="formInputChange" data-field="jkPics" files="{{formData.jkPics}}" max-count="1" title=""></mp-uploader>
+          </mp-cell>
+          <mp-cell prop="xcPics" title="行程码截图" ext-class="">
+            <mp-uploader bindfail="failPics" binddelete="delPics" showDelete="{{!approve}}" bindselect="formInputChange" data-field="xcPics" files="{{formData.xcPics}}" max-count="1" title=""></mp-uploader>
+          </mp-cell>
+          <mp-cell prop="ymPics" title="疫苗接种截图" ext-class="">
+            <mp-uploader bindfail="failPics" binddelete="delPics" showDelete="{{!approve}}" bindselect="formInputChange" data-field="ymPics" files="{{formData.ymPics}}" max-count="1" title=""></mp-uploader>
           </mp-cell>
         </view>
         <mp-cell title="进入分类" ext-class="">
-          <picker bindchange="formInputChange" data-field="type" value="{{formData.type}}" range="{{typesList}}">
+          <picker disabled="{{approve}}" bindchange="formInputChange" data-field="type" value="{{formData.type}}" range="{{typesList}}">
             <view class="picker">{{typesList[formData.type]}}</view>
           </picker>
         </mp-cell>
         <!-- 手术跟台和手术交流 -->
         <view wx:if="{{formData.type==='0' || formData.type==='1'}}">
-          <mp-cell prop="illName" title="患者名称" ext-class="">
-            <input value="{{formData.illName}}" bindinput="formInputChange" data-field="illName" class="weui-input" placeholder="患者名称" />
+          <mp-cell prop="illName" title="患者姓名" ext-class="">
+            <input disabled="{{approve}}" value="{{formData.illName}}" bindinput="formInputChange" data-field="illName" class="weui-input" placeholder="患者姓名" />
           </mp-cell>
           <mp-cell prop="bedNo" title="床号" ext-class="">
-            <input value="{{formData.bedNo}}" bindinput="formInputChange" data-field="bedNo" class="weui-input" placeholder="床号" />
+            <input disabled="{{approve}}" value="{{formData.bedNo}}" bindinput="formInputChange" data-field="bedNo" class="weui-input" placeholder="床号" />
           </mp-cell>
           <mp-cell prop="hospitalNo" title="住院号" ext-class="">
-            <input value="{{formData.hospitalNo}}" bindinput="formInputChange" data-field="hospitalNo" class="weui-input" placeholder="住院号" />
+            <input disabled="{{approve}}" value="{{formData.hospitalNo}}" bindinput="formInputChange" data-field="hospitalNo" class="weui-input" placeholder="住院号" />
           </mp-cell>
           <mp-cell prop="operationName" title="手术名称" ext-class="">
-            <input value="{{formData.operationName}}" bindinput="formInputChange" data-field="operationName" class="weui-input" placeholder="手术名称" />
+            <input disabled="{{approve}}" value="{{formData.operationName}}" bindinput="formInputChange" data-field="operationName" class="weui-input" placeholder="手术名称" />
           </mp-cell>
           <mp-cell wx:if="{{formData.type==='0'}}" title="跟台原因" ext-class="">
             <radio-group bindchange="formInputChange" data-field="typeRes">
               <label class="marginRight20">
-                <radio value="1" checked="{{formData.typeRes==='1'}}" />
+                <radio disabled="{{approve}}" value="1" checked="{{formData.typeRes==='1'}}" />
                 设备
               </label>
               <label>
-                <radio value="2" checked="{{formData.typeRes==='2'}}" />
+                <radio disabled="{{approve}}" value="2" checked="{{formData.typeRes==='2'}}" />
                 耗材
               </label>
               <label>
-                <radio value="3" checked="{{formData.typeRes==='3'}}" />
+                <radio disabled="{{approve}}" value="3" checked="{{formData.typeRes==='3'}}" />
                 标本
               </label>
             </radio-group>
@@ -91,41 +162,66 @@
         </view>
         <!-- 设备维护维修 -->
         <mp-cell wx:if="{{formData.type==='2'}}" prop="deviceName" title="设备名称" ext-class="">
-          <input value="{{formData.deviceName}}" bindinput="formInputChange" data-field="deviceName" class="weui-input" placeholder="设备名称" />
+          <input disabled="{{approve}}" value="{{formData.deviceName}}" bindinput="formInputChange" data-field="deviceName" class="weui-input" placeholder="设备名称" />
         </mp-cell>
         <!-- 参观学习 -->
         <mp-cell wx:if="{{formData.type==='3'}}" title="学习类型" ext-class="">
           <radio-group bindchange="formInputChange" data-field="leanType">
             <label class="marginRight20">
-              <radio value="1" checked="{{formData.leanType==='1'}}" />
+              <radio disabled="{{approve}}" value="1" checked="{{formData.leanType==='1'}}" />
               进修
             </label>
             <label>
-              <radio value="2" checked="{{formData.leanType==='2'}}" />
+              <radio disabled="{{approve}}" value="2" checked="{{formData.leanType==='2'}}" />
               学习
             </label>
             <label>
-              <radio value="3" checked="{{formData.leanType==='3'}}" />
+              <radio disabled="{{approve}}" value="3" checked="{{formData.leanType==='3'}}" />
               参观
+            </label>
+          </radio-group>
+        </mp-cell>
+        <!-- 学习类型目的 -->
+        <mp-cell wx:if="{{formData.type==='3'}}" title="{{formData.leanType==='3'?'参数内容':'身份'}}" ext-class="">
+          <input disabled="{{approve}}" wx:if="{{formData.leanType==='3'}}" value="{{formData.content}}" bindinput="formInputChange" data-field="content" class="weui-input" placeholder="参观内容" />
+          <radio-group wx:else bindchange="formInputChange" data-field="person">
+            <label class="marginRight20">
+              <radio disabled="{{approve}}" value="1" checked="{{formData.person==='1'}}" />
+              医生
+            </label>
+            <label>
+              <radio disabled="{{approve}}" value="2" checked="{{formData.person==='2'}}" />
+              护士
             </label>
           </radio-group>
         </mp-cell>
         <!-- 其他 -->
         <mp-cell wx:if="{{formData.type==='4'}}" prop="purpose" title="目的" ext-class="">
-          <input value="{{formData.purpose}}" bindinput="formInputChange" data-field="purpose" class="weui-input" placeholder="进入目的" />
+          <input disabled="{{approve}}" value="{{formData.purpose}}" bindinput="formInputChange" data-field="purpose" class="weui-input" placeholder="进入目的" />
         </mp-cell>
       </mp-cells>
       <!-- 提交按钮 -->
       <view class="submit_btn_wrap">
-        <button class="weui-btn" type="primary" bindtap="submitForm">确定</button>
+        <button wx:if="{{!approve}}" class="weui-btn" type="primary" bindtap="submitForm">
+          确定
+        </button>
+        <view wx:else class="approve_btn">
+          <button bindtap="approveCommit" data-type="yes" class="mini-btn" type="primary" size="mini">
+            通过
+          </button>
+          <button bindtap="approveCommit" data-type="no" class="mini-btn" type="warn" size="mini">
+            驳回
+          </button>
+        </view>
       </view>
     </mp-form>
   </view>
   <!-- 培训页面 -->
   <view wx:else>
+    <view class="examMain">培训功能正在开发中，请点击确定按钮继续</view>
     <!-- 提交考试 -->
     <view class="submit_btn_wrap">
-      <button class="weui-btn" type="primary" bindtap="submitForm">确定考试</button>
+      <button class="weui-btn" type="primary" bindtap="commitExam">确定</button>
     </view>
   </view>
 </view>

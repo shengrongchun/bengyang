@@ -1,1 +1,19 @@
 /* pages/approve/approve.wxss */
+/* pages/application/application.wxss */
+.page__bd {
+  background: #eee;
+  min-height: 100%;
+}
+.weui-form-preview {
+  margin-bottom: 20rpx;
+}
+.nodata {
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+  color: #aaa;
+  padding-top: 100rpx;
+}
+.blue {
+  color: #2196F3;
+}

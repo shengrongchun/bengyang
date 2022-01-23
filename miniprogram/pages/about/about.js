@@ -7,7 +7,11 @@ Page({
   data: {
     ID: ''
   },
-
+  copyId() {
+    wx.setClipboardData({
+      data: this.data.ID
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */

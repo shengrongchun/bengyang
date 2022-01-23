@@ -11,4 +11,5 @@
       <text class="cuIcon-{{item.icon}}"></text>
     </view>
   </view>
+  <view wx:if="{{User}}" bindtap="goManager">进入管理界面</view>
 </view>

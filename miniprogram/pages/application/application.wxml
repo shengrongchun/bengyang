@@ -1,2 +1,74 @@
-<!--pages/application/application.wxml-->
-<text>pages/application/application.wxml</text>
+<wxs module="filter">
+module.exports = {
+  list :  ['手术跟台', '手术交流', '设备维护维修', '参观学习','其他']
+}
+</wxs>
+<view class="page">
+  <view wx:if="{{list.length}}" class="page__bd">
+    <!-- 开始 -->
+    <view class="weui-form-preview" wx:for="{{list}}" data-item="{{item}}" wx:key="id">
+      <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">审批状态</view>
+          <view wx:if="{{item.status.length}}">
+            <view wx:if="{{item.status[0]==='驳回'}}" class="weui-form-preview__value_in-hd red">
+              驳回
+            </view>
+            <view wx:else class="weui-form-preview__value_in-hd blue">{{item.status[0]}}审批中</view>
+          </view>
+          <view wx:else class="weui-form-preview__value_in-hd success">审批完成</view>
+        </view>
+      </view>
+      <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">姓名</view>
+          <view class="weui-form-preview__value">{{item.name}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">提交时间</view>
+          <view class="weui-form-preview__value">{{item.commitDate}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">进入时间</view>
+          <view class="weui-form-preview__value">{{item.date}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">进入类型</view>
+          <view class="weui-form-preview__value">{{filter.list[item.type]}}</view>
+        </view>
+      </view>
+      <view class="weui-form-preview__ft">
+        <view bindtap="createApply" data-item="{{item}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">
+          再次申请
+        </view>
+        <view bindtap="successApply" wx:if="{{!item.status.length}}" data-item="{{item}}" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">
+          查看进入凭证
+        </view>
+      </view>
+    </view>
+    <!-- 结束 -->
+    <view class="weui-loadmore" wx:if="{{locked}}">
+      <view>已全部加载</view>
+    </view>
+  </view>
+  <view wx:else class="nodata">未获取到任何申请信息，请到首页申请</view>
+  <!-- 弹框 -->
+  <mp-dialog ext-class="go-dialog" title="手术室通行证" show="{{showDialog}}" mask-closable="{{false}}" buttons="{{[{text:'关闭'}]}}" bindbuttontap="dialogClose">
+    <view class="go-header">
+      <view class="left">
+        <view class="go">{{filter.list[dialogObj.type]}}</view>
+        <view class="name">
+          <image class="go-logo" src="./logo.png" />
+          <view>{{dialogObj.name}}</view>
+        </view>
+      </view>
+      <view class="right">{{dialogObj.card ||  dialogObj.no}}</view>
+    </view>
+    <view class="go-main">
+      <view>{{dialogObj.timer}}</view>
+      <view class="go-pics">
+        <image mode="widthFix" lazy-load="{{true}}" wx:for="{{dialogObj.picsList}}" src="{{item.url}}" wx:key="index"></image>
+      </view>
+    </view>
+  </mp-dialog>
+</view>

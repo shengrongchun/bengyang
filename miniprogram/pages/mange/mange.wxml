@@ -1,0 +1,68 @@
+<!-- pages/mange.wxml -->
+<mp-toptips msg="{{error}}" type="error" show="{{error}}"></mp-toptips>
+<scroll-view class="tab-scroll" scrollX="true">
+  <view bindtap="reflashData" class="tab-view" data-index="{{index}}" id="{{item.text}}" wx:for="{{listTab}}" wx:key="text">
+    <text class="tab-text {{curIndex==index?'active':''}}">{{item.text}}</text>
+  </view>
+</scroll-view>
+<!-- main -->
+<view class="main-list">
+  <!-- 审批管理 -->
+  <view wx:if="{{curIndex===0}}" class="approve-list">
+    <view class="weui-form-preview" wx:for="{{approveList}}" data-item="{{item}}" wx:key="id">
+      <view class="weui-form-preview__hd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">审批部门</view>
+          <view class="weui-form-preview__value_in-hd">{{item.depart}}</view>
+        </view>
+      </view>
+      <view class="weui-form-preview__bd">
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">姓名</view>
+          <view class="weui-form-preview__value">{{item.name}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">工号</view>
+          <view class="weui-form-preview__value">{{item.no}}</view>
+        </view>
+        <view class="weui-form-preview__item">
+          <view class="weui-form-preview__label">职务</view>
+          <view class="weui-form-preview__value">{{item.job}}</view>
+        </view>
+      </view>
+      <view class="weui-form-preview__ft">
+        <view data-item="{{item}}" data-index="{{index}}" bindtap="delApprove" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">
+          删除
+        </view>
+      </view>
+    </view>
+    <view class="nodata" wx:if="{{!approveList.length}}">暂无审批人员，请立即添加</view>
+    <view class="weui-loadmore" wx:if="{{approveLocked&&approveList.length}}">已经加载全部</view>
+    <view class="addPerson" bindtap="openAdd">+</view>
+    <!-- 添加审批人员 -->
+    <mp-dialog title="添加审批人员" ext-class="custom-dialog" show="{{showDialog}}" buttons="{{[{text:'关闭'},{text:'确定'}]}}" bindbuttontap="dialogConfirm" mask-closable="{{false}}">
+      <mp-cells>
+        <mp-cell prop="card" title="姓名" ext-class="">
+          <input value="{{addObj.name}}" bindinput="selectInput" data-field="name" class="weui-input" placeholder="请输入姓名" />
+        </mp-cell>
+        <mp-cell prop="card" title="职务" ext-class="">
+          <input value="{{addObj.job}}" bindinput="selectInput" data-field="job" class="weui-input" placeholder="请输入职务" />
+        </mp-cell>
+        <mp-cell prop="card" title="工号" ext-class="">
+          <input value="{{addObj.no}}" bindinput="selectInput" data-field="no" class="weui-input" placeholder="请输入工号" />
+        </mp-cell>
+        <mp-cell prop="card" title="ID" ext-class="">
+          <input value="{{addObj.openid}}" bindinput="selectInput" data-field="openid" class="weui-input" placeholder="请输入ID" />
+        </mp-cell>
+        <mp-cell prop="card" title="审批部门" ext-class="">
+          <picker disabled="{{approve}}" bindchange="selectDepart" value="{{addObj.depart}}" range="{{departList}}">
+            <view wx:if="{{addObj.depart}}" class="picker">{{addObj.depart}}</view>
+            <view wx:else>请选择审批部门</view>
+          </picker>
+        </mp-cell>
+      </mp-cells>
+    </mp-dialog>
+  </view>
+  <!-- 申请人员管理 -->
+  <view wx:if="{{curIndex===1}}" class="approve-list"></view>
+</view>

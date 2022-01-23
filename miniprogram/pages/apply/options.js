@@ -13,8 +13,24 @@ export const rules = [
     rules: {required: true, message: '请输入日期'},
   },
   {
+    name: 'compy',
+    rules: {required: true, message: '请输入单位'},
+  },
+  {
+    name: 'job',
+    rules: {required: true, message: '请输入职业'},
+  },
+  {
     name: 'no',
     rules: {required: true, message: '请输入工号'},
+  },
+  {
+    name: 'noPics',
+    rules: {validator: function(rule, value) {
+      if (!value.length) {
+        return '请上传工作证照片'
+      }
+    }}
   },
   {
     name: 'card',
@@ -25,8 +41,40 @@ export const rules = [
     }}
   },
   {
+    name: 'cardPics',
+    rules: {validator: function(rule, value) {
+      if (!value.length) {
+        return '请上传身份证照片'
+      }
+    }}
+  },
+  {
+    name: 'jkPics',
+    rules: {validator: function(rule, value) {
+      if (!value.length) {
+        return '请上传健康码照片'
+      }
+    }}
+  },
+  {
+    name: 'xcPics',
+    rules: {validator: function(rule, value) {
+      if (!value.length) {
+        return '请上传行程码照片'
+      }
+    }}
+  },
+  {
+    name: 'ymPics',
+    rules: {validator: function(rule, value) {
+      if (!value.length) {
+        return '请上传疫苗接种照片'
+      }
+    }}
+  },
+  {
     name: 'illName',
-    rules: {required: true, message: '请输入患者名称'},
+    rules: {required: true, message: '请输入患者姓名'},
   },
   {
     name: 'bedNo',
@@ -48,6 +96,10 @@ export const rules = [
     name: 'purpose',
     rules: {required: true, message: '请输入进入目的'},
   },
+  {
+    name: 'content',
+    rules: {required: true, message: '请输入参观内容'},
+  }
 ]
 //
 export const typesList = ['手术跟台', '手术交流', '设备维护维修', '参观学习','其他']
@@ -60,28 +112,76 @@ export const formData = {
   sex:  '1',// 1 男 2 女
   card: null,//身份证号码
   type: '0',//0 1 2 3 4 进入手术室目的
-  illName: null,//患者名称
+  illName: null,//患者姓名
   bedNo: null,//床号
   hospitalNo: null,//住院号
   operationName: null,//手术名称
   typeRes: '1',//跟台原因 1:设备机械相关 2:耗材相关 3:标本相关
   deviceName: null,//描述设备名称
   purpose: null,//其他进入目的
-  leanType: '1',//学习类型 1: 进修 2 参观 3 学习
+  leanType: '1',//学习类型 1: 进修 2 学习 3 参观
+  person: '1',//1 医生 2 护士 只有在：进修 学习才有
+  content: null,//参观内容，只有在： 参观才有
+  compy: null,//单位
+  job: null,//职业
+  ill1: '1',//传染病
+  ill2: '1',//呼吸道病
+  ill3: '1',//创伤
+  ill4: '1',//医学背景
+  noPics: [],//工作证照片 [{url:xxx}]
+  cardPics: [],//身份证照片 
+  jkPics: [],//健康码
+  xcPics: [],//行程码
+  ymPics: [],//疫苗接种
 }
-export function getParamsData(formData) {//根据类型不同返回
-  const { personType,name,mobile,date,no,sex,card,type } = formData
+export async function getParamsData(formData,upload) {//根据类型不同返回
+  const { personType,name,mobile,date,no,sex,card,type,compy,job,
+    ill1,ill2,ill3,ill4,noPics,cardPics,jkPics,xcPics,ymPics
+  } = formData
   if(personType==='1') {//非本院职工
+    if(upload) {
+      for(let pics of [cardPics,jkPics,xcPics,ymPics]) {
+        const res = await uploadFile(date+'/'+card+'/', pics[0].url)
+        if(res.fileID) {
+          pics[0].url = res.fileID
+        }else {
+          return false
+        }
+      }
+    }
     return {
-      name,mobile,date,sex,card,type,...objTypeFun(formData)
+      name,mobile,date,sex,card,cardPics,jkPics,xcPics,ymPics,compy,job,ill1,ill2,ill3,ill4,type,...objTypeFun(formData)
+    }
+  }
+  if(upload) {
+    const res = await uploadFile(date+'/'+no+'/', noPics[0].url)
+    if(res.fileID) {
+      noPics[0].url = res.fileID
+    }else {
+      return false
     }
   }
   return {//本院职工
-    name,mobile,date,no,type,...objTypeFun(formData)
+    name,mobile,date,no,noPics,type,...objTypeFun(formData)
   }
 }
+function uploadFile(cloudPath,filePath) {
+  cloudPath += (new Date().getTime())+filePath.match(/\.[^.]+?$/)[0]
+  return new Promise((resolve ,reject)=> {
+    wx.cloud.uploadFile({
+      cloudPath,
+      filePath,
+      success(res) {
+        resolve(res)
+      },
+      fail(err) {
+        reject(err)
+      }
+    })
+  })
+}
 function objTypeFun(formData) {
-  const { type, illName,bedNo,hospitalNo,operationName,typeRes,deviceName,leanType,purpose } = formData
+  const { type, illName,bedNo,hospitalNo,operationName,typeRes,deviceName,leanType,purpose,content,person } = formData
   if(type==='0' || type==='1') {//'手术跟台', '手术交流'
     const obj = {illName,bedNo,hospitalNo,operationName}
     if(type==='0') {
@@ -93,7 +193,10 @@ function objTypeFun(formData) {
     return {deviceName}
   }
   if(type==='3') {//参观学习
-    return {leanType}
+    if(leanType==='3') {//参观
+      return {leanType,content}
+    }
+    return {leanType,person}
   }
   if(type==='4') {//其他
     return {purpose}

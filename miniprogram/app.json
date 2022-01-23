@@ -2,9 +2,10 @@
   "pages": [
     "pages/view/view",
     "pages/apply/apply",
-    "pages/application/application",
     "pages/approve/approve",
-    "pages/about/about"
+    "pages/about/about",
+    "pages/mange/mange",
+    "pages/application/application"
   ],
   "window": {
     "backgroundColor": "#FFF",
@@ -23,6 +24,7 @@
     "mp-cells": "weui-miniprogram/cells/cells",
     "mp-cell": "weui-miniprogram/cell/cell",
     "mp-toptips": "weui-miniprogram/toptips/toptips",
+    "mp-dialog": "weui-miniprogram/dialog/dialog",
     "mp-uploader": "weui-miniprogram/uploader/uploader"
   }
 }

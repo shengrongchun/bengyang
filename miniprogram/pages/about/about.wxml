@@ -2,4 +2,5 @@
 <view class="user">
   ID:
   <text class="userid">{{ID}}</text>
+  <button bindtap="copyId" class="right" type="primary" plain size="mini">复制</button>
 </view>

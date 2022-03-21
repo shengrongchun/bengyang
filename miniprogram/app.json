@@ -2,8 +2,8 @@
   "pages": [
     "pages/view/view",
     "pages/apply/apply",
-    "pages/approve/approve",
     "pages/about/about",
+    "pages/approve/approve",
     "pages/mange/mange",
     "pages/application/application"
   ],

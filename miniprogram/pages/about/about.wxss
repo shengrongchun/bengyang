@@ -4,6 +4,9 @@
   padding: 0 40rpx;
   box-sizing: border-box;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+}
+.copy-btn {
+  color: #06ae56;
 }

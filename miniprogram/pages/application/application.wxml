@@ -62,7 +62,7 @@ module.exports = {
           <view>{{dialogObj.name}}</view>
         </view>
       </view>
-      <view class="right">{{dialogObj.card ||  dialogObj.no}}</view>
+      <view class="right">NO：{{dialogObj.card ||  dialogObj.no}}</view>
     </view>
     <view class="go-main">
       <view>{{dialogObj.timer}}</view>

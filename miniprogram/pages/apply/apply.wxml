@@ -153,11 +153,19 @@
                 <radio disabled="{{approve}}" value="2" checked="{{formData.typeRes==='2'}}" />
                 耗材
               </label>
-              <label>
+              <view style="display: block;margin-bottom:10rpx"></view>
+              <label class="marginRight20">
                 <radio disabled="{{approve}}" value="3" checked="{{formData.typeRes==='3'}}" />
                 标本
               </label>
+              <label>
+                <radio disabled="{{approve}}" value="4" checked="{{formData.typeRes==='4'}}" />
+                器械
+              </label>
             </radio-group>
+          </mp-cell>
+          <mp-cell wx:if="{{formData.type==='0'&&formData.typeRes==='4'}}" title="跟台证" ext-class="">
+            <mp-uploader bindfail="failPics" binddelete="delPics" showDelete="{{!approve}}" bindselect="formInputChange" data-field="genPics" files="{{formData.genPics}}" max-count="1" tips="无可不上传" title=""></mp-uploader>
           </mp-cell>
         </view>
         <!-- 设备维护维修 -->
@@ -171,20 +179,19 @@
               <radio disabled="{{approve}}" value="1" checked="{{formData.leanType==='1'}}" />
               进修
             </label>
-            <label>
+            <label class="marginRight20">
               <radio disabled="{{approve}}" value="2" checked="{{formData.leanType==='2'}}" />
-              学习
+              培训
             </label>
             <label>
               <radio disabled="{{approve}}" value="3" checked="{{formData.leanType==='3'}}" />
-              参观
+              实训
             </label>
           </radio-group>
         </mp-cell>
         <!-- 学习类型目的 -->
-        <mp-cell wx:if="{{formData.type==='3'}}" title="{{formData.leanType==='3'?'参数内容':'身份'}}" ext-class="">
-          <input disabled="{{approve}}" wx:if="{{formData.leanType==='3'}}" value="{{formData.content}}" bindinput="formInputChange" data-field="content" class="weui-input" placeholder="参观内容" />
-          <radio-group wx:else bindchange="formInputChange" data-field="person">
+        <mp-cell wx:if="{{formData.type==='3'}}" title="身份" ext-class="">
+          <radio-group bindchange="formInputChange" data-field="person">
             <label class="marginRight20">
               <radio disabled="{{approve}}" value="1" checked="{{formData.person==='1'}}" />
               医生

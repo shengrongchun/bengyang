@@ -65,7 +65,14 @@ async function emitApply(depart) {
   })
 }
 //
-async function getApprove({type,leanType,typeRes,person}) {
+async function getApprove({type,leanType,typeRes,person,genPics}) {
+  if(typeRes==='4') {//器械
+    if(genPics&&genPics.length) {//有跟台证
+      typeRes = '3'
+    }else {
+      typeRes = '1'
+    }
+  }
   const data = await db.collection('approveTypes')
          .where({
           type,leanType,typeRes,person

@@ -8,6 +8,7 @@ Page({
     ID: ''
   },
   copyId() {
+    console.log('111')
     wx.setClipboardData({
       data: this.data.ID
     })

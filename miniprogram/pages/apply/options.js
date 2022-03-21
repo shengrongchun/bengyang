@@ -95,10 +95,6 @@ export const rules = [
   {
     name: 'purpose',
     rules: {required: true, message: '请输入进入目的'},
-  },
-  {
-    name: 'content',
-    rules: {required: true, message: '请输入参观内容'},
   }
 ]
 //
@@ -116,12 +112,11 @@ export const formData = {
   bedNo: null,//床号
   hospitalNo: null,//住院号
   operationName: null,//手术名称
-  typeRes: '1',//跟台原因 1:设备机械相关 2:耗材相关 3:标本相关
+  typeRes: '1',//跟台原因 1:设备相关 2:耗材相关 3:标本相关 4:器械相关
   deviceName: null,//描述设备名称
   purpose: null,//其他进入目的
-  leanType: '1',//学习类型 1: 进修 2 学习 3 参观
-  person: '1',//1 医生 2 护士 只有在：进修 学习才有
-  content: null,//参观内容，只有在： 参观才有
+  leanType: '1',//学习类型 1: 进修 2 培训 3 实训
+  person: '1',//1 医生 2 护士 
   compy: null,//单位
   job: null,//职业
   ill1: '1',//传染病
@@ -133,19 +128,22 @@ export const formData = {
   jkPics: [],//健康码
   xcPics: [],//行程码
   ymPics: [],//疫苗接种
+  genPics: [],//跟台证
 }
 export async function getParamsData(formData,upload) {//根据类型不同返回
   const { personType,name,mobile,date,no,sex,card,type,compy,job,
-    ill1,ill2,ill3,ill4,noPics,cardPics,jkPics,xcPics,ymPics
+    ill1,ill2,ill3,ill4,noPics,cardPics,jkPics,xcPics,ymPics,genPics,typeRes
   } = formData
   if(personType==='1') {//非本院职工
     if(upload) {
-      for(let pics of [cardPics,jkPics,xcPics,ymPics]) {
-        const res = await uploadFile(date+'/'+card+'/', pics[0].url)
-        if(res.fileID) {
-          pics[0].url = res.fileID
-        }else {
-          return false
+      for(let pics of [cardPics,jkPics,xcPics,ymPics,typeRes==='4'?genPics:[]]) {
+        if(pics.length) {
+          const res = await uploadFile(date+'/'+card+'/', pics[0].url)
+          if(res.fileID) {
+            pics[0].url = res.fileID
+          }else {
+            return false
+          }
         }
       }
     }
@@ -154,11 +152,15 @@ export async function getParamsData(formData,upload) {//根据类型不同返回
     }
   }
   if(upload) {
-    const res = await uploadFile(date+'/'+no+'/', noPics[0].url)
-    if(res.fileID) {
-      noPics[0].url = res.fileID
-    }else {
-      return false
+    for(let pics of [noPics,typeRes==='4'?genPics:[]]) {
+      if(pics.length) {
+        const res = await uploadFile(date+'/'+no+'/', pics[0].url)
+        if(res.fileID) {
+          pics[0].url = res.fileID
+        }else {
+          return false
+        }
+      }
     }
   }
   return {//本院职工
@@ -181,11 +183,14 @@ function uploadFile(cloudPath,filePath) {
   })
 }
 function objTypeFun(formData) {
-  const { type, illName,bedNo,hospitalNo,operationName,typeRes,deviceName,leanType,purpose,content,person } = formData
+  const { type, illName,bedNo,hospitalNo,operationName,typeRes,deviceName,leanType,purpose,person,genPics } = formData
   if(type==='0' || type==='1') {//'手术跟台', '手术交流'
     const obj = {illName,bedNo,hospitalNo,operationName}
     if(type==='0') {
       obj.typeRes = typeRes
+      if(typeRes==='4') {//器械
+        obj.genPics = genPics
+      }
     }
     return obj
   }
@@ -193,10 +198,10 @@ function objTypeFun(formData) {
     return {deviceName}
   }
   if(type==='3') {//参观学习
-    if(leanType==='3') {//参观
-      return {leanType,content}
+    if(leanType==='1') {//进修
+      return {leanType,person}
     }
-    return {leanType,person}
+    return {leanType}
   }
   if(type==='4') {//其他
     return {purpose}

@@ -189,6 +189,7 @@ Page({
             jkPics: [],//健康码
             xcPics: [],//行程码
             ymPics: [],//疫苗接种
+            genPics: [],//跟台证
           }
         }
         Object.assign(this.data.formData, item, temp)

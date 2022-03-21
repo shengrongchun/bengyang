@@ -64,10 +64,20 @@ Page({
     },100);
   },
   successApply({currentTarget}) {//查看进入凭证
-    this.intervalTimer()
     const { item } = currentTarget.dataset
-    const { cardPics=[],noPics=[],jkPics=[],xcPics=[],ymPics=[]} = item
-    item.picsList = cardPics.concat(noPics,jkPics,xcPics,ymPics)
+    const currentTime = new Date(app.getCurrentDate(0,false))
+    const goTime = new Date(item.date)
+    if(currentTime>goTime) {
+      wx.showToast({
+        title: '进入时间已过期',
+        icon: 'none',
+        duration: 2000
+      })
+      return
+    }
+    this.intervalTimer()
+    const { cardPics=[],noPics=[] } = item
+    item.picsList = cardPics.concat(noPics)
     this.setData({
       showDialog: true,
       dialogObj: item

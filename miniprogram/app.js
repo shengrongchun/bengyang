@@ -23,8 +23,9 @@ App({
         wx.cloud.callFunction({
           name: 'getApprove',
         }).then((data)=> {
-          const { openid, ID } = data.result || {}
+          const { openid, ID, show } = data.result || {}
           if(openid) {
+            this.globalData.show = show
             this.globalData.ID = openid
             this.globalData.User = ID === openid
             cb()

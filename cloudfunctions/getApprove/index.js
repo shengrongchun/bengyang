@@ -74,8 +74,9 @@ exports.main = async (event, context) => {
   }
   //
   const obj = await db.collection('applyInfo').get()
-  const {ID, env} = obj.data[0] || {}
+  const {ID, show, env} = obj.data[0] || {}
   return {
+    show,
     ID,
     openid: wxContext.OPENID,
     appid: wxContext.APPID,

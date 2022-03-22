@@ -10,7 +10,7 @@ Page({
   data: {
     User: false,
     avatarUrl: './cardBg.png',
-    list
+    list: []
   },
   viewClick: function(event) {// view点击
     const { url, tmplId } = event.currentTarget.dataset.item
@@ -34,7 +34,14 @@ Page({
    */
   onLoad: function (options) {
     app.login(()=> {
+      let List = list
+      if(!globalData.show) {
+        List = List.filter(({name})=> {
+          return name!=='Apply'
+        })
+      }
       this.setData({
+        list: List,
         User: globalData.User
       })
     })

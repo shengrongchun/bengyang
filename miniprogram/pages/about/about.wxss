@@ -2,6 +2,7 @@
 .user {
   width: 100%;
   padding: 0 40rpx;
+  margin: 20rpx 0 50rpx;
   box-sizing: border-box;
   display: flex;
   justify-content: space-between;
@@ -9,4 +10,12 @@
 }
 .copy-btn {
   color: #06ae56;
+}
+.go-pics {
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.go-pics .img {
+  width: 100%;
 }

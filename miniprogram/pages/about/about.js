@@ -5,10 +5,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    ID: ''
+    ID: '',
+    picsList: [{
+      url: 'cloud://shengjiaren-5guf1osd10721e44.7368-shengjiaren-5guf1osd10721e44-1305051206/about.jpg'
+    }]
   },
   copyId() {
-    console.log('111')
     wx.setClipboardData({
       data: this.data.ID
     })

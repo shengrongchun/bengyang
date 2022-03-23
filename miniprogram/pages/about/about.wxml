@@ -1,4 +1,7 @@
 <!-- pages/about/about.wxml -->
+<view class="go-pics">
+  <image mode="widthFix" class="img" lazy-load="{{true}}" wx:for="{{picsList}}" src="{{item.url}}" wx:key="index"></image>
+</view>
 <view class="user">
   ID:
   <text class="userid">{{ID}}</text>

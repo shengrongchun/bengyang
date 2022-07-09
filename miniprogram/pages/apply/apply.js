@@ -157,9 +157,9 @@ Page({
       error: msg
     })
   },
-  showTrain({title}) {
+  showTrain() {
     wx.showLoading({
-      title: title||'加载中',
+      title: '预计10秒中',
       mask: true
     })
     if(app.globalData.pptTempUrl) {
@@ -176,7 +176,7 @@ Page({
           const filePath = res.tempFilePath
           app.globalData.pptTempUrl = filePath
           wx.openDocument({
-            filePath: filePath,
+            filePath,
             complete() {
               wx.hideLoading()
             }
@@ -191,21 +191,28 @@ Page({
   },
   commitExam() {//考试提交
     const { length } = this.data.trainList
-    if(this.data.trainResult.length!==length) {
-      wx.showToast({
-        title: '请完成培训题目',
-        icon: 'none',
-        duration: 2000
-      })
-      return 
+    const resultH = this.data.trainResult.length
+    if(resultH===0 || resultH!==length) {
+      return this.showMsg('请完成培训题目')
     }
     //
     if(this.data.trainResult.includes(false)) {//答题出错
-      return this.showTrain({title:'答错，请培训'})
+      this.showMsg('答错，请重新培训')
+      clearTimeout(this.timeout)
+      this.timeout = setTimeout(()=> {
+        this.showTrain()
+      },1500)
+      return
     }
     this.addRecord()
   },
-  
+  showMsg(title) {
+    wx.showToast({
+      title,
+      icon: 'none',
+      duration: 2000
+    })
+  },
 
 
 

@@ -225,7 +225,17 @@
   </view>
   <!-- 培训页面 -->
   <view wx:else>
-    <view class="examMain">培训功能正在开发中，请点击确定按钮继续</view>
+    <view class="examMain">提示：请认真查看培训资料，完成培训考试</view>
+    <button class="weui-btn" type="primary" bindtap="showTrain">查看培训资料</button>
+    <view wx:for="{{trainList}}"  wx:key="index" class="exam-item">
+      <label>{{index+1}} {{item.title}}</label>
+      <radio-group class="train-group" bindchange="trainRadioChange" data-index="{{index}}" data-answer="{{item.answer}}">
+        <view class="train-group-label" wx:for="{{item.options}}" wx:key="item">
+          <radio value="{{item}}">{{item}}</radio>
+        </view>
+      </radio-group>
+    </view>
+ 
     <!-- 提交考试 -->
     <view class="submit_btn_wrap">
       <button class="weui-btn" type="primary" bindtap="commitExam">确定</button>

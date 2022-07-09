@@ -35,7 +35,7 @@ Page({
   onLoad: function (options) {
     app.login(()=> {
       let List = list
-      if(!globalData.show) {
+      if(!globalData.show) {//判断是否显示来访申请
         List = List.filter(({name})=> {
           return name!=='Apply'
         })

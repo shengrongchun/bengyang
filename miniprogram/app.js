@@ -3,7 +3,8 @@ App({
   onLaunch: function () {
     this.globalData = {
       applyIds: '2ojePAJOu0rK5v_qgi4A9-ssyoWyYwwUg_RzJy1cBZY',
-      approveIds: '7s0AjANAHq6TjpeMMaVd01i57Vg_X36kNGgvOI2fpYU'
+      approveIds: '7s0AjANAHq6TjpeMMaVd01i57Vg_X36kNGgvOI2fpYU',
+      pptTempUrl: ''
     }
     //
     if (!wx.cloud) {

@@ -198,13 +198,47 @@ function objTypeFun(formData) {
     return {deviceName}
   }
   if(type==='3') {//参观学习
-    if(leanType==='1') {//进修
-      return {leanType,person}
-    }
-    return {leanType}
+    // if(leanType==='1') {//进修
+    //   return {leanType,person}
+    // }
+    return {leanType,person}
   }
   if(type==='4') {//其他
     return {purpose}
   }
   return {}
+}
+const trainContent = [{
+  title: '下列哪项不是手术室的分区？',
+  answer: '无菌区',
+  options: ['限制区','半限制区','非限制区','无菌区']
+},{
+  title: '手术房间属于以下哪个区域？',
+  answer: '限制区',
+  options: ['限制区','半限制区','非限制区','无菌区']
+},{
+  title: '进入限制区下列说法错误的是',
+  answer: '可将饮水杯等生活用品带入限制区',
+  options: ['可将饮水杯等生活用品带入限制区','需更换洗手衣裤、佩戴一次性手术帽、换专用手术鞋、戴一次性口罩'
+  ,'不可将洗手衣裤、手术室专用拖鞋穿出手术室','不可在手术区域大声谈笑、随意坐卧']
+},{
+  title: '离开手术室前，应将洗手衣裤、专用拖鞋丢弃于',
+  answer: '更衣室的指定地方',
+  options: ['更衣室的指定地方','随地丢弃','黑色垃圾袋','黄色垃圾袋']
+},{
+  title: '以下有关在手术室内行为规范的描述错误的是',
+  answer: '在手术室内可随意拍照',
+  options: ['参观手术时不可紧贴手术人员，需保持一定的距离','未经巡回护士允许不得随意进出正在手术的房间'
+  ,'在手术室内可随意拍照','未经允许不得将手术相关物品拿进或拿出手术室']
+}]
+//
+export const getTrainContent = ()=> {
+  trainContent.sort(()=> {
+    return Math.random() - 0.5
+  }).forEach(({options},idx,list)=> {
+      list[idx].options = options.sort(()=> {
+        return Math.random() - 0.5
+      })
+  })
+  return trainContent
 }

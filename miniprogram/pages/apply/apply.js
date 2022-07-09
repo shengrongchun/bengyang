@@ -1,5 +1,5 @@
 // pages/apply/apply.js
-import { typesList,rules,formData,getParamsData } from './options'
+import { typesList,rules,formData,getParamsData,getTrainContent } from './options'
 const app = getApp()
 Page({
   /**
@@ -13,6 +13,8 @@ Page({
     typesList,
     rules,
     approve: false,//只能看，也就是审批状态
+    trainList : getTrainContent(),
+    trainResult: []
   },
   submitForm() {//表单确认
     this.selectComponent('#form').validate(async(valid, errors=[]) => {
@@ -75,9 +77,6 @@ Page({
       })
       wx.hideLoading()
     })
-  },
-  commitExam() {//考试提交
-    this.addRecord()
   },
   approveCommit({currentTarget}) {//审批通过/驳回
     app.confirmSendMsg(app.globalData.approveIds)//订阅审批消息
@@ -158,6 +157,54 @@ Page({
       error: msg
     })
   },
+  showTrain({title}) {
+    wx.showLoading({
+      title: title||'加载中',
+      mask: true
+    })
+    if(app.globalData.pptTempUrl) {
+      wx.openDocument({
+        filePath: app.globalData.pptTempUrl,
+        complete() {
+          wx.hideLoading()
+        }
+      })
+    }else {
+      wx.downloadFile({
+        url: 'https://7368-shengjiaren-5guf1osd10721e44-1305051206.tcb.qcloud.la/rule.ppt?sign=9859c84c65964bd52986c3e6140ba4c6&t=1657346781',
+        success: function (res) {
+          const filePath = res.tempFilePath
+          app.globalData.pptTempUrl = filePath
+          wx.openDocument({
+            filePath: filePath,
+            complete() {
+              wx.hideLoading()
+            }
+          })
+        }
+      })
+    }
+  },
+  trainRadioChange({currentTarget,detail}) {
+    const {answer,index} = currentTarget.dataset
+    this.data.trainResult[index] = answer===detail.value
+  },
+  commitExam() {//考试提交
+    const { length } = this.data.trainList
+    if(this.data.trainResult.length!==length) {
+      wx.showToast({
+        title: '请完成培训题目',
+        icon: 'none',
+        duration: 2000
+      })
+      return 
+    }
+    //
+    if(this.data.trainResult.includes(false)) {//答题出错
+      return this.showTrain({title:'答错，请培训'})
+    }
+    this.addRecord()
+  },
   
 
 
@@ -205,14 +252,14 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    
   },
 
   /**

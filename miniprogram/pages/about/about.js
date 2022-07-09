@@ -7,7 +7,7 @@ Page({
   data: {
     ID: '',
     picsList: [{
-      url: 'cloud://shengjiaren-5guf1osd10721e44.7368-shengjiaren-5guf1osd10721e44-1305051206/about.jpg'
+      url: 'cloud://shengjiaren-5guf1osd10721e44.7368-shengjiaren-5guf1osd10721e44-1305051206/about.jpeg'
     }]
   },
   copyId() {

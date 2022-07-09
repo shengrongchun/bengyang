@@ -171,7 +171,7 @@ Page({
       })
     }else {
       wx.downloadFile({
-        url: 'https://7368-shengjiaren-5guf1osd10721e44-1305051206.tcb.qcloud.la/rule.ppt?sign=9859c84c65964bd52986c3e6140ba4c6&t=1657346781',
+        url: 'https://7368-shengjiaren-5guf1osd10721e44-1305051206.tcb.qcloud.la/rule.ppt?sign=62ef541b0d2159d783dc709ceeeaf96e&t=1657361918',
         success: function (res) {
           const filePath = res.tempFilePath
           app.globalData.pptTempUrl = filePath

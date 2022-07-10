@@ -73,6 +73,11 @@ async function getApprove({type,leanType,typeRes,person,genPics}) {
       typeRes = '1'
     }
   }
+  if(type==='3') {//参观学习
+    if(leanType!=='1') {//不是进修
+      person = undefined
+    }
+  }
   const data = await db.collection('approveTypes')
          .where({
           type,leanType,typeRes,person

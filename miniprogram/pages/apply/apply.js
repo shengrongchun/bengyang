@@ -159,7 +159,7 @@ Page({
   },
   showTrain() {
     wx.showLoading({
-      title: '预计10秒中',
+      title: '预计5秒中',
       mask: true
     })
     if(app.globalData.pptTempUrl) {
@@ -171,7 +171,7 @@ Page({
       })
     }else {
       wx.downloadFile({
-        url: 'https://7368-shengjiaren-5guf1osd10721e44-1305051206.tcb.qcloud.la/rule.ppt?sign=62ef541b0d2159d783dc709ceeeaf96e&t=1657361918',
+        url: 'https://7368-shengjiaren-5guf1osd10721e44-1305051206.tcb.qcloud.la/rule.pdf?sign=b1e55fe22f370e7ff5680d525b47eebb&t=1657549038',
         success: function (res) {
           const filePath = res.tempFilePath
           app.globalData.pptTempUrl = filePath

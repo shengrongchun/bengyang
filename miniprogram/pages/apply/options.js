@@ -210,12 +210,12 @@ function objTypeFun(formData) {
 }
 const trainContent = [{
   title: '下列哪项不是手术室的分区？',
-  answer: '无菌区',
-  options: ['限制区','半限制区','非限制区','无菌区']
+  answer: '跨越区',
+  options: ['限制区','半限制区','非限制区','跨越区']
 },{
   title: '手术房间属于以下哪个区域？',
   answer: '限制区',
-  options: ['限制区','半限制区','非限制区','无菌区']
+  options: ['限制区','半限制区','非限制区']
 },{
   title: '进入限制区下列说法错误的是',
   answer: '可将饮水杯等生活用品带入限制区',
